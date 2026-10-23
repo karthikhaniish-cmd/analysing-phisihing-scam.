@@ -1,0 +1,6 @@
+{
+  "name": "PhishGuard AI — Phishing Email Detection System",
+  "description": "Intelligent Email Security Powered by Machine Learning. Academic ML-based phishing email detection, risk analysis, and security dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Home — PhishGuard AI{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5 position-relative overflow-hidden">
+    <div class="cyber-grid-overlay"></div>
+    <div class="container position-relative py-lg-5">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-cyan-subtle text-cyan border border-cyan-dim mb-3">
+                    <span class="pulse-indicator"></span>
+                    <span class="small fw-semibold">Next-Gen Email Defense &bull; Academic Project</span>
+                </div>
+                <h1 class="display-4 fw-extrabold text-white mb-3">
+                    Intelligent Email Security <br>
+                    <span class="text-gradient-cyan">Powered by Machine Learning</span>
+                </h1>
+                <p class="lead text-light-dim mb-4">
+                    Protect your inbox against spear phishing, deceptive spoofing, and credential harvesting using automated 
+                    <strong>TF-IDF text vectorization</strong> and a trained <strong>Multinomial Naive Bayes</strong> classifier.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('scanner') }}" class="btn btn-cyan btn-lg px-4 shadow-glow">
+                        <i class="bi bi-radar me-2"></i> Start Email Scan
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-speedometer2 me-2"></i> View Live Dashboard
+                    </a>
+                </div>
+
+                <!-- Fast Stats Pill -->
+                <div class="row g-3 mt-4 pt-3 border-top border-dark">
+                    <div class="col-4">
+                        <div class="stat-mini">
+                            <span class="h4 fw-bold text-cyan mb-0">87.5%</span>
+                            <span class="text-secondary small d-block">Test Accuracy</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-mini">
+                            <span class="h4 fw-bold text-white mb-0">&lt;50ms</span>
+                            <span class="text-secondary small d-block">Inference Speed</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="stat-mini">
+                            <span class="h4 fw-bold text-emerald mb-0">Dual-Layer</span>
+                            <span class="text-secondary small d-block">ML + Heuristics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 text-center">
+                <div class="scanner-preview-card p-4 rounded-4 shadow-lg border border-cyan-dim bg-deep-card">
+                    <div class="d-flex justify-content-between align-items-center border-bottom border-dark pb-2 mb-3">
+                        <span class="text-cyan small font-mono"><i class="bi bi-terminal me-1"></i> threat_engine.py</span>
+                        <span class="badge bg-danger-subtle text-danger border border-danger">HIGH RISK DETECTED</span>
+                    </div>
+                    <div class="terminal-body font-mono text-start small text-light">
+                        <div class="text-secondary">// Target Email Header Analysis</div>
+                        <div class="text-warning"><span class="text-info">Sender:</span> security@paypaI-sec-notice.com</div>
+                        <div class="text-warning"><span class="text-info">Subject:</span> URGENT: Account Suspension in 24h</div>
+                        <div class="text-secondary mt-2">// Extracted NLP Features:</div>
+                        <div class="text-light">[urgent, suspend, verify, password, banking, hours]</div>
+                        <div class="mt-3 p-2 bg-dark rounded border border-danger-subtle">
+                            <div class="d-flex justify-content-between text-secondary extra-small">
+                                <span>Bayes Posterior:</span>
+                                <span class="text-danger fw-bold">96.4% Phishing</span>
+                            </div>
+                            <div class="progress mt-1" style="height: 6px;">
+                                <div class="progress-bar bg-danger" style="width: 96.4%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-secondary extra-small text-start">
+                        <i class="bi bi-shield-lock text-cyan me-1"></i> Real-time multi-stage token classification
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What is Phishing Section -->
+<section class="py-5 bg-deep-blue border-top border-dark">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <span class="badge bg-cyan-subtle text-cyan mb-2">CYBERSECURITY ESSENTIALS</span>
+                <h2 class="fw-bold text-white mb-3">What are Phishing Emails?</h2>
+                <p class="text-secondary">
+                    Phishing is a social engineering attack where malicious actors impersonate reputable institutions—such as 
+                    banks, universities, tech corporations, or executive colleagues—to deceive recipients into disclosing confidential 
+                    information like passwords, credit card numbers, or two-factor authentication tokens.
+                </p>
+                <div class="d-flex flex-column gap-3 mt-4">
+                    <div class="d-flex gap-3">
+                        <div class="icon-bubble bg-danger-subtle text-danger">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Psychological Urgency & Fear</h6>
+                            <p class="text-secondary small mb-0">Attackers manufacture artificial deadlines ("Account suspended in 24 hours") to bypass rational critical thinking.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="icon-bubble bg-warning-subtle text-warning">
+                            <i class="bi bi-link-45deg"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Deceptive Domain Spoofing</h6>
+                            <p class="text-secondary small mb-0">Attackers substitute subtle homoglyphs (e.g. uppercase 'I' for lowercase 'l' in paypaI) or use shady TLDs.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="icon-bubble bg-cyan-subtle text-cyan">
+                            <i class="bi bi-key"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-white mb-1">Harvesting Exploitations</h6>
+                            <p class="text-secondary small mb-0">Victims are funneled to cloned portals designed to siphon authentication credentials directly into attacker servers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="p-4 rounded-4 bg-deep-card border border-dark">
+                    <h5 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+                        <i class="bi bi-cpu text-cyan"></i> Machine Learning vs. Static Keyword Filters
+                    </h5>
+                    <p class="text-secondary small">
+                        Traditional email filters rely heavily on static blacklists and rigid keyword rules which attackers easily circumvent by inserting typos, emojis, or zero-width spaces. 
+                        <strong>PhishGuard AI</strong> employs probabilistic machine learning:
+                    </p>
+                    <ul class="list-unstyled text-secondary small d-flex flex-column gap-2 mb-0">
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan mt-1"></i>
+                            <span><strong>TF-IDF Vectorization:</strong> Computes the statistical rarity and significance of terms across legitimate and malicious corpuses.</span>
+                        </li>
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan mt-1"></i>
+                            <span><strong>Multinomial Naive Bayes:</strong> Calculates conditionally independent joint probability distributions across the entire email document.</span>
+                        </li>
+                        <li class="d-flex align-items-start gap-2">
+                            <i class="bi bi-check2-circle text-cyan mt-1"></i>
+                            <span><strong>Heuristic Triangulation:</strong> Supplements statistical inference with targeted checks for domain typosquatting and unencrypted endpoints.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-dark-navy border-top border-dark">
+    <div class="container text-center">
+        <span class="badge bg-cyan-subtle text-cyan mb-2">WORKFLOW PIPELINE</span>
+        <h2 class="fw-bold text-white mb-2">How It Works in 3 Steps</h2>
+        <p class="text-secondary mb-5 max-w-600 mx-auto">From raw email headers and copy to comprehensive risk score in milliseconds.</p>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 bg-deep-card border border-dark p-4 rounded-4 position-relative step-card">
+                    <div class="step-badge">1</div>
+                    <div class="step-icon mb-3 text-cyan">
+                        <i class="bi bi-envelope-open display-6"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-2">Enter Email Details</h5>
+                    <p class="text-secondary small mb-0">
+                        Input the sender address, subject line, body message, and optional links into the interactive scanner form or load ready-made test vectors.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 bg-deep-card border border-dark p-4 rounded-4 position-relative step-card">
+                    <div class="step-badge">2</div>
+                    <div class="step-icon mb-3 text-cyan">
+                        <i class="bi bi-cpu display-6"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-2">ML Model Analysis</h5>
+                    <p class="text-secondary small mb-0">
+                        The Flask backend tokenizes terms, computes TF-IDF weights, evaluates posterior probabilities with Multinomial Naive Bayes, and inspects heuristic indicators.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 bg-deep-card border border-dark p-4 rounded-4 position-relative step-card">
+                    <div class="step-badge">3</div>
+                    <div class="step-icon mb-3 text-cyan">
+                        <i class="bi bi-shield-check display-6"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-2">View Risk & Advice</h5>
+                    <p class="text-secondary small mb-0">
+                        Receive a transparent classification (Phishing vs Legitimate), confidence score, detected warning signs, and actionable security recommendations.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <a href="{{ url_for('scanner') }}" class="btn btn-cyan btn-lg px-5 shadow-glow">
+                Try the Scanner Now <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Technology Stack Section -->
+<section class="py-5 bg-deep-blue border-top border-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-cyan-subtle text-cyan mb-2">SYSTEM ARCHITECTURE</span>
+            <h2 class="fw-bold text-white">Academic Technology Stack</h2>
+            <p class="text-secondary">Engineered with robust open-source components for reproducibility and academic defense.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
+                <div class="tech-box p-3 rounded-3 text-center bg-deep-card border border-dark">
+                    <i class="bi bi-filetype-py display-6 text-warning mb-2 d-block"></i>
+                    <h6 class="text-white mb-1">Python 3 & Flask</h6>
+                    <span class="text-secondary extra-small">Server backend, routing & REST API</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-box p-3 rounded-3 text-center bg-deep-card border border-dark">
+                    <i class="bi bi-diagram-3 display-6 text-cyan mb-2 d-block"></i>
+                    <h6 class="text-white mb-1">Scikit-learn & TF-IDF</h6>
+                    <span class="text-secondary extra-small">NLP vectorization & Bayes pipeline</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-box p-3 rounded-3 text-center bg-deep-card border border-dark">
+                    <i class="bi bi-database display-6 text-info mb-2 d-block"></i>
+                    <h6 class="text-white mb-1">SQLite 3</h6>
+                    <span class="text-secondary extra-small">Lightweight telemetry & scan history</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="tech-box p-3 rounded-3 text-center bg-deep-card border border-dark">
+                    <i class="bi bi-pie-chart display-6 text-emerald mb-2 d-block"></i>
+                    <h6 class="text-white mb-1">Chart.js</h6>
+                    <span class="text-secondary extra-small">Dynamic interactive analytics</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Security Disclaimer -->
+<section class="py-4 bg-black border-top border-dark">
+    <div class="container">
+        <div class="alert alert-dark border border-secondary-subtle bg-deep-card text-secondary mb-0 d-flex align-items-center gap-3">
+            <i class="bi bi-info-circle-fill text-warning fs-3 flex-shrink-0"></i>
+            <div class="small">
+                <strong class="text-white">Academic Project Notice:</strong>
+                PhishGuard AI is an academic demonstration developed to showcase Natural Language Processing (NLP) and Machine Learning in threat classification. It never executes untrusted links or code. Real-world email security should be accompanied by SPF/DKIM/DMARC protocols and multi-factor authentication.
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

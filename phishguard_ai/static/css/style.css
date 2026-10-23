@@ -1,0 +1,218 @@
+/* PhishGuard AI — Modern Cybersecurity Dark Theme */
+
+:root {
+    --bg-dark-navy: #070d19;
+    --bg-deep-blue: #0b1329;
+    --bg-deep-card: #0f1a36;
+    --bg-card-hover: #142247;
+    --color-cyan: #00f0ff;
+    --color-cyan-dim: rgba(0, 240, 255, 0.25);
+    --color-cyan-glow: rgba(0, 240, 255, 0.4);
+    --color-electric-blue: #2563eb;
+    --color-emerald: #10b981;
+    --color-danger: #ef4444;
+    --color-warning: #f59e0b;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark-navy);
+    color: #f1f5f9;
+    overflow-x: hidden;
+}
+
+.font-mono {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+.bg-dark-navy {
+    background-color: var(--bg-dark-navy) !important;
+}
+
+.bg-deep-blue {
+    background-color: var(--bg-deep-blue) !important;
+}
+
+.bg-deep-card {
+    background-color: var(--bg-deep-card) !important;
+}
+
+.border-cyan-subtle {
+    border-color: rgba(0, 240, 255, 0.15) !important;
+}
+
+.border-cyan-dim {
+    border-color: var(--color-cyan-dim) !important;
+}
+
+.text-cyan {
+    color: var(--color-cyan) !important;
+}
+
+.text-emerald {
+    color: var(--color-emerald) !important;
+}
+
+.text-gradient-cyan {
+    background: linear-gradient(135deg, #00f0ff 0%, #38bdf8 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-light-dim {
+    color: #cbd5e1;
+}
+
+.extra-small {
+    font-size: 0.775rem;
+}
+
+/* Cyber Grid Background Pattern */
+.hero-section {
+    position: relative;
+    background: radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                var(--bg-dark-navy);
+}
+
+.cyber-grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Buttons */
+.btn-cyan {
+    background-color: #00e5ff;
+    color: #030712;
+    font-weight: 600;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.btn-cyan:hover {
+    background-color: #38bdf8;
+    color: #030712;
+    box-shadow: 0 0 20px var(--color-cyan-glow);
+    transform: translateY(-1px);
+}
+
+.btn-outline-cyan {
+    color: var(--color-cyan);
+    border-color: var(--color-cyan);
+    background: transparent;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-cyan:hover {
+    background-color: var(--color-cyan);
+    color: #030712;
+    box-shadow: 0 0 15px var(--color-cyan-glow);
+}
+
+.shadow-glow {
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+}
+
+.shadow-glow-sm {
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+/* Indicators */
+.pulse-indicator {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-cyan);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px var(--color-cyan);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 240, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+}
+
+.icon-bubble {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.bg-cyan-subtle {
+    background-color: rgba(0, 240, 255, 0.12) !important;
+}
+
+.bg-danger-subtle {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+.bg-warning-subtle {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+.bg-success-subtle {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Cards & Elements */
+.card {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: rgba(0, 240, 255, 0.3) !important;
+}
+
+.step-card {
+    border-top: 3px solid var(--color-cyan) !important;
+}
+
+.step-badge {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
+    background: var(--color-cyan);
+    color: #030712;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px var(--color-cyan-glow);
+}
+
+.max-w-500 {
+    max-width: 500px;
+}
+
+.max-w-600 {
+    max-width: 600px;
+}
+
+/* Form Controls */
+.form-control:focus {
+    background-color: #030712 !important;
+    border-color: var(--color-cyan) !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.25) !important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 240, 255, 0.05) !important;
+}

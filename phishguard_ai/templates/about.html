@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}About Project — PhishGuard AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <span class="badge bg-cyan-subtle text-cyan mb-2">ACADEMIC METHODOLOGY & THEORY</span>
+            <h1 class="fw-extrabold text-white">About PhishGuard AI</h1>
+            <p class="text-secondary lead">
+                An engineering and data science research project exploring machine learning for automated email threat classification.
+            </p>
+        </div>
+    </div>
+
+    <!-- Overview Card -->
+    <div class="card bg-deep-card border border-dark rounded-4 p-4 p-md-5 mb-5 shadow-sm">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+                <h3 class="text-white fw-bold mb-3">Project Abstract</h3>
+                <p class="text-secondary">
+                    Phishing attacks continue to represent over 80% of reported enterprise security compromises. Malicious actors 
+                    exploit human vulnerability through coercive psychological tactics, spoofed administrative headers, and weaponized hyperlinks.
+                </p>
+                <p class="text-secondary">
+                    <strong>PhishGuard AI</strong> demonstrates an end-to-end detection pipeline combining Natural Language Processing (NLP) 
+                    feature extraction with supervised probabilistic modeling. By analyzing statistical distributions of unigrams, bigrams, 
+                    and syntactic heuristics, the system calculates precise threat likelihoods without executing suspicious attachments or visiting adversarial endpoints.
+                </p>
+            </div>
+            <div class="col-lg-5">
+                <div class="p-4 bg-dark rounded-4 border border-cyan-dim font-mono small">
+                    <div class="text-cyan mb-2">// Machine Learning Pipeline</div>
+                    <div class="text-secondary">1. Raw Text Cleaning & Normalization</div>
+                    <div class="text-secondary">2. RegEx & Stopword Removal</div>
+                    <div class="text-secondary">3. Sublinear TF-IDF Feature Extraction</div>
+                    <div class="text-secondary">4. Multinomial Naive Bayes Posterior</div>
+                    <div class="text-secondary">5. Heuristic Domain & Link Verification</div>
+                    <div class="text-success mt-2">--&gt; Risk Score (High / Medium / Low)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mathematics & Algorithms -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+            <div class="card bg-deep-card border border-dark rounded-4 p-4 h-100 shadow-sm">
+                <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+                    <i class="bi bi-calculator text-cyan"></i> 1. TF-IDF Feature Extraction
+                </h4>
+                <p class="text-secondary small">
+                    Term Frequency-Inverse Document Frequency (TF-IDF) converts unstructured email text into a numerical vector space. 
+                    It balances local frequency with global corpus rarity:
+                </p>
+                <div class="bg-black p-3 rounded-3 border border-dark text-cyan font-mono text-center mb-3">
+                    $$ \text{TF-IDF}(t, d, D) = \text{TF}(t, d) \times \log\left(\frac{1 + |D|}{1 + \text{DF}(t, D)}\right) + 1 $$
+                </div>
+                <ul class="text-secondary small d-flex flex-column gap-2 mb-0">
+                    <li><strong>TF (Term Frequency):</strong> Frequency of token $t$ inside document $d$ (using sublinear logarithmic scaling).</li>
+                    <li><strong>IDF (Inverse Document Frequency):</strong> Penalizes ubiquitous terms like "the" or "and" while elevating discriminative tokens like "ssn", "verify", or "suspended".</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card bg-deep-card border border-dark rounded-4 p-4 h-100 shadow-sm">
+                <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+                    <i class="bi bi-diagram-2 text-cyan"></i> 2. Multinomial Naive Bayes
+                </h4>
+                <p class="text-secondary small">
+                    Multinomial Naive Bayes computes the maximum a posteriori (MAP) class assignment given the bag-of-words representation under the conditional independence assumption:
+                </p>
+                <div class="bg-black p-3 rounded-3 border border-dark text-cyan font-mono text-center mb-3">
+                    $$ P(c | d) \propto P(c) \prod_{i=1}^{n} P(w_i | c)^{\text{TF-IDF}(w_i, d)} $$
+                </div>
+                <ul class="text-secondary small d-flex flex-column gap-2 mb-0">
+                    <li><strong>Prior Probability $P(c)$:</strong> The base distribution of phishing vs legitimate emails in the corpus.</li>
+                    <li><strong>Laplace Smoothing ($\alpha = 0.1$):</strong> Mitigates zero-frequency pitfalls for novel words encountered at inference time.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Threat Taxonomy Matrix -->
+    <div class="card bg-deep-card border border-dark rounded-4 p-4 mb-5 shadow-sm">
+        <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-shield-lock text-cyan"></i> Heuristic Warning Signs & Threat Taxonomy
+        </h4>
+        <p class="text-secondary small mb-4">
+            In addition to statistical learning, PhishGuard AI evaluates transparent, explainable heuristic patterns:
+        </p>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-hover small border border-dark mb-0">
+                <thead>
+                    <tr class="bg-black text-secondary">
+                        <th>Threat Vector</th>
+                        <th>Observed Pattern</th>
+                        <th>Typical Attacker Goal</th>
+                        <th>Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-white fw-semibold">Psychological Coercion</td>
+                        <td>"Urgent action required within 24 hours", "Account deletion"</td>
+                        <td>Force impulsive compliance before security verification</td>
+                        <td><span class="badge bg-danger-subtle text-danger">High</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white fw-semibold">Credential Harvesting</td>
+                        <td>Explicit requests for PIN, password, SSN, seed phrase</td>
+                        <td>Direct account takeover and identity theft</td>
+                        <td><span class="badge bg-danger-subtle text-danger">High</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white fw-semibold">Typosquatting & Homoglyphs</td>
+                        <td>paypaI.com (capital i), micro-soft.xyz, bofa-cardprotect.cc</td>
+                        <td>Deceive users into trusting spoofed login destinations</td>
+                        <td><span class="badge bg-danger-subtle text-danger">High</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white fw-semibold">Insecure Protocol</td>
+                        <td>Unencrypted HTTP links instead of valid HTTPS</td>
+                        <td>Man-in-the-middle credential interception</td>
+                        <td><span class="badge bg-warning-subtle text-warning">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-white fw-semibold">Domain Authority Mismatch</td>
+                        <td>Bank or payroll claims sent from free @gmail or @yahoo mailbox</td>
+                        <td>Bypassing domain registration or spoofing filters</td>
+                        <td><span class="badge bg-danger-subtle text-danger">High</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Security & Ethics -->
+    <div class="alert alert-dark bg-deep-card border border-dark text-secondary p-4 rounded-4 mb-0">
+        <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-shield-slash-fill text-warning fs-3 mt-1"></i>
+            <div>
+                <h6 class="text-white fw-bold mb-1">Ethical Considerations & Safe Analysis Guarantee</h6>
+                <p class="small mb-0">
+                    PhishGuard AI adheres to strict safe-handling practices: submitted email contents are analyzed strictly in memory, 
+                    URLs are parsed using regular expression tokenizers without performing HTTP network requests or DNS resolutions, 
+                    and no attachments or executable macros are ever evaluated.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

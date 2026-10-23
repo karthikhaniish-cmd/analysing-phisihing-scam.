@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Email Scanner — PhishGuard AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <span class="badge bg-cyan-subtle text-cyan mb-2">INTELLIGENT THREAT ANALYSIS</span>
+            <h1 class="fw-extrabold text-white">Live Phishing Email Scanner</h1>
+            <p class="text-secondary">
+                Submit an email header and body to evaluate threat probabilities using the trained 
+                <strong>Multinomial Naive Bayes</strong> classifier and heuristic indicators.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Input Form Column -->
+        <div class="col-lg-7">
+            <div class="card bg-deep-card border border-dark rounded-4 shadow-lg p-4">
+                <div class="d-flex justify-content-between align-items-center border-bottom border-dark pb-3 mb-3">
+                    <h5 class="text-white mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-envelope-arrow-up text-cyan"></i> Email Details
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-outline-danger btn-sm" id="btnLoadPhish">
+                            <i class="bi bi-bug me-1"></i> Load Phishing Sample
+                        </button>
+                        <button type="button" class="btn btn-outline-success btn-sm" id="btnLoadLegit">
+                            <i class="bi bi-check-circle me-1"></i> Load Legitimate Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Validation Alert -->
+                <div id="validationAlert" class="alert alert-danger d-none border-danger-subtle py-2 small" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="validationMessage">Please fill in the required fields.</span>
+                </div>
+
+                <form id="scannerForm" novalidate>
+                    <!-- Sender Email -->
+                    <div class="mb-3">
+                        <label for="senderInput" class="form-label text-light small fw-semibold">
+                            Sender Email Address <span class="text-secondary">(Optional but recommended)</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-dark text-cyan"><i class="bi bi-at"></i></span>
+                            <input type="email" class="form-control bg-dark text-light border-dark" id="senderInput" placeholder="e.g. support@service-notification.com">
+                        </div>
+                    </div>
+
+                    <!-- Email Subject -->
+                    <div class="mb-3">
+                        <label for="subjectInput" class="form-label text-light small fw-semibold">
+                            Email Subject <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-dark text-cyan"><i class="bi bi-chat-left-quote"></i></span>
+                            <input type="text" class="form-control bg-dark text-light border-dark" id="subjectInput" placeholder="e.g. Action Required: Your Account Has Been Temporarily Suspended" required>
+                        </div>
+                    </div>
+
+                    <!-- Email Body -->
+                    <div class="mb-3">
+                        <label for="bodyInput" class="form-label text-light small fw-semibold">
+                            Email Body Content <span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control bg-dark text-light border-dark font-mono small" id="bodyInput" rows="7" placeholder="Paste full message text here..." required></textarea>
+                        <div class="form-text text-secondary extra-small">
+                            Character count: <span id="charCount">0</span> &bull; Full text will be analyzed via TF-IDF tokenization.
+                        </div>
+                    </div>
+
+                    <!-- Optional URL -->
+                    <div class="mb-4">
+                        <label for="urlInput" class="form-label text-light small fw-semibold">
+                            Embedded Hyperlink / URL <span class="text-secondary">(Optional)</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-dark text-cyan"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" class="form-control bg-dark text-light border-dark" id="urlInput" placeholder="e.g. http://login-verify-account.info/auth">
+                        </div>
+                        <div class="form-text text-secondary extra-small">
+                            <i class="bi bi-shield-shaded text-cyan me-1"></i> URLs are analyzed syntactically for deception and never visited by our server.
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center pt-2 border-top border-dark">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="btnClear">
+                            <i class="bi bi-trash3 me-1"></i> Clear Form
+                        </button>
+                        <button type="submit" class="btn btn-cyan px-4 py-2 shadow-glow" id="btnSubmit">
+                            <span id="btnSubmitSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                            <i class="bi bi-cpu me-1" id="btnSubmitIcon"></i>
+                            <span id="btnSubmitText">Analyze Email</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Prediction Result Column -->
+        <div class="col-lg-5">
+            <!-- Initial Empty State -->
+            <div id="resultsPlaceholder" class="card bg-deep-card border border-dark rounded-4 shadow-lg p-5 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                <div class="p-3 rounded-circle bg-dark border border-cyan-dim mb-3">
+                    <i class="bi bi-shield-lock display-5 text-cyan"></i>
+                </div>
+                <h5 class="text-white fw-bold mb-2">Ready to Scan</h5>
+                <p class="text-secondary small mb-3">
+                    Submit the form on the left or load one of the preset benchmark samples to generate a full Bayesian threat evaluation.
+                </p>
+                <div class="badge bg-dark text-secondary border border-dark px-3 py-2 font-mono">
+                    Awaiting Input...
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="resultsLoading" class="card bg-deep-card border border-cyan-dim rounded-4 shadow-lg p-5 text-center h-100 d-none flex-column justify-content-center align-items-center">
+                <div class="spinner-border text-cyan mb-3" style="width: 3.5rem; height: 3.5rem;" role="status">
+                    <span class="visually-hidden">Analyzing...</span>
+                </div>
+                <h5 class="text-white fw-bold mb-1">Evaluating Email Threat</h5>
+                <p class="text-secondary small mb-0">Running TF-IDF feature extraction & Naive Bayes classifier...</p>
+            </div>
+
+            <!-- Active Results Card -->
+            <div id="resultsCard" class="card bg-deep-card border rounded-4 shadow-lg p-4 d-none">
+                <!-- Header with Classification -->
+                <div class="d-flex justify-content-between align-items-center border-bottom border-dark pb-3 mb-3">
+                    <div>
+                        <span class="text-secondary extra-small text-uppercase tracking-wider">Classification</span>
+                        <h3 class="fw-extrabold mb-0" id="resultClassText">Phishing</h3>
+                    </div>
+                    <div class="text-end">
+                        <span class="text-secondary extra-small text-uppercase tracking-wider">Risk Level</span>
+                        <div>
+                            <span class="badge px-3 py-2 fw-bold fs-6" id="resultRiskBadge">High Risk</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Probability Score Bar -->
+                <div class="mb-3 p-3 bg-dark rounded-3 border border-dark">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="text-light small fw-semibold"><i class="bi bi-graph-up-arrow me-1 text-cyan"></i> Model Confidence</span>
+                        <span class="fw-bold font-mono text-cyan" id="resultConfidenceText">96.4%</span>
+                    </div>
+                    <div class="progress bg-secondary-subtle" style="height: 8px;">
+                        <div class="progress-bar" id="resultProgressBar" role="progressbar" style="width: 96.4%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between extra-small text-secondary mt-1">
+                        <span>Multinomial Naive Bayes Posterior</span>
+                        <span id="resultScanId">ID: PG-10291</span>
+                    </div>
+                </div>
+
+                <!-- Email Header Summary -->
+                <div class="mb-3 p-3 bg-black rounded-3 border border-dark small">
+                    <div class="text-secondary extra-small mb-1">// Email Context</div>
+                    <div class="text-truncate text-light mb-1">
+                        <strong class="text-cyan">Sender:</strong> <span id="resultSenderText">None specified</span>
+                    </div>
+                    <div class="text-truncate text-light">
+                        <strong class="text-cyan">Subject:</strong> <span id="resultSubjectText">None specified</span>
+                    </div>
+                </div>
+
+                <!-- Detected Suspicious Indicators -->
+                <div class="mb-3">
+                    <h6 class="text-white fw-bold small mb-2 d-flex justify-content-between">
+                        <span><i class="bi bi-exclamation-octagon text-warning me-1"></i> Detected Indicators</span>
+                        <span class="badge bg-dark text-cyan font-mono" id="resultIndicatorCount">3 Signs</span>
+                    </h6>
+                    <div id="resultIndicatorsList" class="d-flex flex-column gap-2">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="p-3 rounded-3 border border-dark" id="resultRecContainer">
+                    <h6 class="text-white fw-bold small mb-2">
+                        <i class="bi bi-shield-check text-cyan me-1"></i> Security Recommendations
+                    </h6>
+                    <ul class="list-unstyled extra-small text-secondary mb-0 d-flex flex-column gap-1" id="resultRecList">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+
+                <div class="mt-3 text-center">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-cyan btn-sm">
+                        <i class="bi bi-bar-chart me-1"></i> View in Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+{% endblock %}

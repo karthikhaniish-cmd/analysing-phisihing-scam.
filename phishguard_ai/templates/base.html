@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PhishGuard AI — Intelligent Email Security{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome / Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-dark-navy text-light min-vh-100 d-flex flex-column">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-deep-blue border-bottom border-cyan-subtle sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('index') }}">
+                <div class="shield-logo">
+                    <i class="bi bi-shield-check text-cyan"></i>
+                </div>
+                <span class="brand-text fw-bold tracking-tight">PhishGuard<span class="text-cyan">.AI</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {% if request.endpoint == 'scanner' %}active{% endif %}" href="{{ url_for('scanner') }}">
+                            <i class="bi bi-radar me-1"></i> Email Scanner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {% if request.endpoint == 'about' %}active{% endif %}" href="{{ url_for('about') }}">
+                            <i class="bi bi-info-circle me-1"></i> About Project
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {% if request.endpoint == 'help_page' %}active{% endif %}" href="{{ url_for('help_page') }}">
+                            <i class="bi bi-question-circle me-1"></i> Help
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
+                    <a href="{{ url_for('scanner') }}" class="btn btn-outline-cyan btn-sm px-3 shadow-glow-sm">
+                        <i class="bi bi-shield-lock me-1"></i> Scan Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Block -->
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-4 border-top border-dark mt-auto">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center gy-3">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-1">
+                        <i class="bi bi-shield-shaded text-cyan"></i>
+                        <span class="fw-bold">PhishGuard AI</span>
+                    </div>
+                    <p class="text-secondary small mb-0">Intelligent Email Security Powered by Machine Learning — Academic Capstone Project.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="small text-secondary mb-1">
+                        <span>TF-IDF Vectorizer</span> &bull; <span>Multinomial Naive Bayes</span> &bull; <span>Flask / Python</span>
+                    </div>
+                    <p class="text-muted extra-small mb-0">
+                        <i class="bi bi-shield-exclamation text-warning me-1"></i>
+                        Security Disclaimer: Prototype detection system for academic demonstration. Always verify critical emails through independent channels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
